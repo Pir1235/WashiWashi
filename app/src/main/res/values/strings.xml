@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WashiWashi</string>
+    <string name="logo">Washi Wash</string>
+    <string name="no_user">Введите текст</string>
+</resources>

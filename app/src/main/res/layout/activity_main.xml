@@ -2,10 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#515151"
+    android:background="@drawable/gradient_animation"
     tools:context=".MainActivity" >
+
 
     <TextView
         android:id="@+id/logo"
@@ -29,7 +31,7 @@
         android:layout_marginTop="50sp"
         android:background="@color/white"
         android:ems="10"
-        android:hint="Введите город"
+        android:hint="   Введите город"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColor="@color/black" />
@@ -49,13 +51,68 @@
         android:id="@+id/ResultW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
         android:layout_below="@id/main_btn"
-        android:gravity="center_horizontal"
         android:layout_marginTop="35sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="40sp" />
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/ResultC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ResultW"
+        android:layout_marginTop="20sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:layout_below="@+id/ResultC"
+        android:layout_marginTop="52dp"
+        app:srcCompat="@drawable/sunny"/>
+<!--
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_below="@+id/ResultC"
+            android:layout_marginTop="52dp"
+            app:srcCompat="@drawable/cloudy" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_below="@+id/ResultC"
+            android:layout_marginTop="52dp"
+            app:srcCompat="@drawable/showers" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_below="@+id/ResultC"
+            android:layout_marginTop="52dp"
+            app:srcCompat="@drawable/snowy" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:layout_below="@+id/ResultC"
+        android:layout_marginTop="52dp"
+        app:srcCompat="@drawable/fog" />
+        -->
+
 
 </RelativeLayout>

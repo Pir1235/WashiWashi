@@ -1,15 +1,25 @@
 package com.example.washiwashi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.service.autofill.OnClickAction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
+import android.graphics.drawable.AnimationDrawable;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,12 +32,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class MainActivity extends AppCompatActivity {
 
+    private ImageView img;
     private EditText userF;
     private Button main_btn;
     private TextView ResultW;
-
+    private TextView ResultC;
+    private RelativeLayout gradient;
+    private GifImageView GifA;
 
 
 
@@ -36,10 +51,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        gradient = findViewById(R.id.gradient);
+        AnimationDrawable animationDrawable = (AnimationDrawable) gradient.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(5000);
+        animationDrawable.start();
+
+        img = (ImageView)findViewById(R.id.imageView1);
         userF = findViewById(R.id.userF);
         main_btn = findViewById(R.id.main_btn);
         ResultW = findViewById(R.id.ResultW);
-
+        ResultC = findViewById(R.id.ResultC);
         main_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,8 +72,10 @@ public class MainActivity extends AppCompatActivity {
                     String key = "47f1e72f28121dcd6bab4e5788b83324";
                     String url = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid="+ key +"&units=metric&lang=ru";
 
-                    new UrlData().execute();
+                    new UrlData().execute(url);
+
                 }
+                //main_btn.setOnClickListener((View.OnClickListener) GifA);
             }
         });
     }
@@ -61,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             ResultW.setText("Жди...");
+
+            super.onPreExecute();
+            ResultC.setText("Жди...");
         }
 
         @Override
@@ -70,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(strings[0]);
-                connection =(HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
                 InputStream stream = connection.getInputStream();
@@ -79,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 StringBuffer buffer = new StringBuffer();
                 String line = "0";
 
-                while((line = reader.readLine()) != null)
+                while ((line = reader.readLine()) != null)
                     buffer.append(line).append("/n");
 
                 return buffer.toString();
@@ -87,14 +114,14 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 if (connection != null)
                     connection.disconnect();
                 try {
                     if (reader != null)
                         reader.close();
                 } catch (IOException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
 
@@ -104,15 +131,44 @@ public class MainActivity extends AppCompatActivity {
 
         @SuppressLint("SetTextI18n")
         @Override
-        protected void onPostExecute(String result){
-           super.onPostExecute(result);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
             try {
                 JSONObject obj = new JSONObject(result);
-                ResultW.setText("Температура: " + obj.getJSONObject("main").getDouble("temp"));
+                ResultW.setText("Температура : " + obj.getJSONObject("main").getDouble("temp") + " °C");
+                ResultC.setText("Погода: " + obj.getJSONArray("weather").getJSONObject(0).getString("description"));
+                image(obj);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
+
+        }
+
+        public void image(JSONObject obj) {
+
+                        try {
+                            if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("небольшой снег")) {
+                                img.setImageResource(R.drawable.snowy);
+                            } else if (ResultC.equals("солнечно")) {
+                                img.setImageResource(R.drawable.sunny);
+                            } else if (ResultC.equals("облачно")) {
+                                img.setImageResource(R.drawable.cloudy);
+                            } else if (ResultC.equals("дождь")) {
+                                img.setImageResource(R.drawable.showers);
+                            } else if (ResultC.equals("снег")) {
+                                img.setImageResource(R.drawable.snowy);
+                            } else if (ResultC.equals("туман")) {
+                                img.setImageResource(R.drawable.fog);
+                            } else {
+                                System.out.println("Неверная оценка");
+                            }
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
         }
     }

@@ -152,15 +152,27 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("небольшой снег")) {
                                 img.setImageResource(R.drawable.snowy);
-                            } else if (ResultC.equals("солнечно")) {
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("солнечно")) {
                                 img.setImageResource(R.drawable.sunny);
-                            } else if (ResultC.equals("облачно")) {
+                            }else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("ясно")) {
+                                img.setImageResource(R.drawable.sunny);
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("облачно")) {
                                 img.setImageResource(R.drawable.cloudy);
-                            } else if (ResultC.equals("дождь")) {
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("пасмурно")) {
+                                img.setImageResource(R.drawable.cloudy);
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("переменная облачность")) {
+                                img.setImageResource(R.drawable.cloudy);
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("облачно с проясненияи")) {
+                                img.setImageResource(R.drawable.cloudy);
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("дождь")) {
                                 img.setImageResource(R.drawable.showers);
-                            } else if (ResultC.equals("снег")) {
+                            }else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("небольшой дождь")) {
+                                img.setImageResource(R.drawable.showers);
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("снег")) {
                                 img.setImageResource(R.drawable.snowy);
-                            } else if (ResultC.equals("туман")) {
+                            } else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("туман")) {
+                                img.setImageResource(R.drawable.fog);
+                            }else if (obj.getJSONArray("weather").getJSONObject(0).getString("description").equals("дымка")) {
                                 img.setImageResource(R.drawable.fog);
                             } else {
                                 System.out.println("Неверная оценка");
